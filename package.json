@@ -1,0 +1,26 @@
+{
+  "name": "vitepress-qiankun-playground",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "packageManager": "pnpm@9.15.2",
+  "workspaces": [
+    "docs",
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently -n docs,react,vue,js -c cyan,green,magenta,yellow \"pnpm dev:docs\" \"pnpm dev:react\" \"pnpm dev:vue\" \"pnpm dev:js\"",
+    "dev:docs": "pnpm -C docs dev",
+    "dev:react": "pnpm -C apps/react dev",
+    "dev:vue": "pnpm -C apps/vue dev",
+    "dev:js": "pnpm -C apps/js dev",
+    "build": "pnpm -C docs build",
+    "preview": "pnpm -C docs preview",
+    "typecheck": "pnpm -C docs typecheck && pnpm -C apps/react typecheck && pnpm -C apps/vue typecheck"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "typescript": "^5.9.3"
+  }
+}

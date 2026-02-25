@@ -1,0 +1,171 @@
+<script setup lang="ts">
+import { defaultExampleId, examples } from '@shared/examples';
+import type { MicroApp } from 'qiankun';
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
+
+type FrameworkKind = 'react' | 'vue' | 'js';
+
+interface PlaygroundProps {
+  framework: FrameworkKind;
+  exampleId: string;
+  onEvent?: (payload: { framework: FrameworkKind; message: string }) => void;
+}
+
+const props = withDefaults(
+  defineProps<{
+    framework?: FrameworkKind;
+    exampleId?: string;
+  }>(),
+  {
+    framework: 'react',
+    exampleId: defaultExampleId,
+  },
+);
+
+const framework = computed(() => props.framework);
+const exampleId = computed(() => props.exampleId);
+const containerRef = ref<HTMLElement | null>(null);
+const isMounted = ref(false);
+const isLoading = ref(false);
+const loadError = ref('');
+const eventLog = ref<string[]>([]);
+
+let started = false;
+let currentApp: MicroApp | null = null;
+let qiankunApi: null | {
+  start: typeof import('qiankun').start;
+  loadMicroApp: typeof import('qiankun').loadMicroApp;
+} = null;
+
+const appEntries: Record<FrameworkKind, string> = {
+  react: import.meta.env.DEV ? 'http://localhost:7101/' : '/micro-apps/react/',
+  vue: import.meta.env.DEV ? 'http://localhost:7102/' : '/micro-apps/vue/',
+  js: import.meta.env.DEV ? 'http://localhost:7103/' : '/micro-apps/js/',
+};
+
+const appNames: Record<FrameworkKind, string> = {
+  react: 'reactDemo',
+  vue: 'vueDemo',
+  js: 'jsDemo',
+};
+
+const titleMap: Record<FrameworkKind, string> = {
+  react: 'React 示例运行中',
+  vue: 'Vue 示例运行中',
+  js: 'JS 示例运行中',
+};
+
+const title = computed(() => titleMap[framework.value]);
+
+const exampleTitle = computed(
+  () => examples.find((item) => item.id === exampleId.value)?.title ?? exampleId.value,
+);
+
+const appendLog = (message: string) => {
+  eventLog.value = [message, ...eventLog.value].slice(0, 8);
+};
+
+const mountApp = async () => {
+  if (!containerRef.value) return;
+
+  isLoading.value = true;
+  loadError.value = '';
+
+  try {
+    if (!qiankunApi) {
+      qiankunApi = await import('qiankun');
+    }
+
+    if (!started) {
+      qiankunApi.start({ sandbox: true, prefetch: false });
+      started = true;
+    }
+
+    if (currentApp) {
+      await currentApp.unmount();
+      currentApp = null;
+    }
+
+    containerRef.value.innerHTML = '';
+
+    currentApp = qiankunApi.loadMicroApp({
+      name: appNames[framework.value],
+      entry: appEntries[framework.value],
+      container: containerRef.value,
+      props: {
+        framework: framework.value,
+        exampleId: exampleId.value,
+        onEvent: (payload: { framework: FrameworkKind; message: string }) =>
+          appendLog(`[${payload.framework}] ${payload.message}`),
+      },
+    });
+
+    await currentApp.mountPromise;
+    isMounted.value = true;
+  } catch (error) {
+    const message = error instanceof Error ? error.message : '微应用加载失败';
+    loadError.value = message;
+    isMounted.value = false;
+  } finally {
+    isLoading.value = false;
+  }
+};
+
+onMounted(async () => {
+  await mountApp();
+});
+
+watch([framework, exampleId], async () => {
+  await mountApp();
+});
+
+onBeforeUnmount(async () => {
+  if (currentApp) {
+    await currentApp.unmount();
+    currentApp = null;
+  }
+});
+</script>
+
+<template>
+  <!-- <section class="playground-shell">
+    <header class="playground-header">
+      <h3>{{ title }} - {{ exampleTitle }}</h3>
+    </header>
+
+    <div v-if="loadError" class="status error">
+      {{ loadError }}
+    </div>
+    <div v-else-if="isLoading" class="status loading">
+      微应用加载中...
+    </div>
+    <div v-else-if="!isMounted" class="status warning">
+      微应用尚未挂载。
+    </div>
+
+    <div ref="containerRef" class="micro-container" />
+
+    <div class="event-log">
+      <h4>交互事件</h4>
+      <p v-if="eventLog.length === 0">暂无事件</p>
+      <ul v-else>
+        <li v-for="(item, index) in eventLog" :key="`${item}-${index}`">
+          {{ item }}
+        </li>
+      </ul>
+    </div>
+  </section> -->
+  <section class="playground-shell">
+    <div v-if="loadError" class="status error">
+      {{ loadError }}
+    </div>
+    <div v-else-if="isLoading" class="status loading">
+      微应用加载中...
+    </div>
+    <div v-else-if="!isMounted" class="status warning">
+      微应用尚未挂载。
+    </div>
+
+    <div ref="containerRef" class="micro-container" />
+  </section>
+</template>
