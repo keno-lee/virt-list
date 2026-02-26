@@ -1,17 +1,16 @@
 // import { Card, Typography } from '@arco-design/web-react';
-import { defaultExampleId } from '@shared/examples';
 // import { useMemo } from 'react';
 import '@arco-design/web-react/dist/css/arco.css';
 import Button from './components/Button';
 import Form from './components/Form';
-import VirtList from './components/VirtList';
+import Tsx from './components/Tsx.tsx';
 
 interface AppProps {
   exampleId?: string;
   onEvent?: (message: string) => void;
 }
 
-function App({ exampleId = defaultExampleId, onEvent }: AppProps) {
+function App({ exampleId = '', onEvent }: AppProps) {
   // const current = useMemo(
   //   () =>
   //     examples.find((item) => item.id === exampleId) ?? {
@@ -24,12 +23,12 @@ function App({ exampleId = defaultExampleId, onEvent }: AppProps) {
   const demoRenderMap = {
     button: () => <Button onEvent={onEvent} />,
     form: () => <Form onEvent={onEvent} />,
-    'virt-list': () => <VirtList />,
+    'tsx': () => <Tsx />,
   };
 
   const renderCurrentDemo = () => {
     const renderer =
-      demoRenderMap[exampleId as keyof typeof demoRenderMap] ?? demoRenderMap['virt-list'];
+      demoRenderMap[exampleId as keyof typeof demoRenderMap] ?? demoRenderMap['tsx'];
     return renderer();
   };
 

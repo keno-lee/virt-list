@@ -1,8 +1,7 @@
-import { defaultExampleId } from '@shared/examples';
 import { defineComponent } from 'vue';
 import Button from './components/Button';
 import Form from './components/Form';
-import VirtList from './components/VirtList';
+import Tsx from './components/Tsx.tsx';
 
 type FrameworkKind = 'react' | 'vue';
 
@@ -11,7 +10,7 @@ export default defineComponent({
   props: {
     exampleId: {
       type: String,
-      default: defaultExampleId,
+      default: '',
     },
     onEvent: {
       type: Function as unknown as () => ((payload: { framework: FrameworkKind; message: string }) => void) | undefined,
@@ -26,12 +25,12 @@ export default defineComponent({
       form: () => (
         <Form onEvent={(message: string) => props.onEvent?.({ framework: 'vue', message })} />
       ),
-      'virt-list': () => <VirtList />,
+      'tsx': () => <Tsx />,
     };
 
     const renderCurrentDemo = () => {
       const renderer =
-        demoRenderMap[props.exampleId as keyof typeof demoRenderMap] ?? demoRenderMap['virt-list'];
+        demoRenderMap[props.exampleId as keyof typeof demoRenderMap] ?? demoRenderMap['tsx'];
       return renderer();
     };
 

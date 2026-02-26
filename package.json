@@ -20,6 +20,7 @@
     "typecheck": "pnpm -C docs typecheck && pnpm -C apps/react typecheck && pnpm -C apps/vue typecheck"
   },
   "devDependencies": {
+    "@faker-js/faker": "^10.3.0",
     "concurrently": "^9.2.1",
     "typescript": "^5.9.3"
   }

@@ -7,9 +7,8 @@
     "jsxImportSource": "vue",
     "baseUrl": ".",
     "paths": {
-      "@shared/*": ["../../packages/shared/src/*"]
+      "@virt-list/js": ["../../packages/js/src/index.ts"]
     },
-
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,

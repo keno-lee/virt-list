@@ -8,7 +8,7 @@ export default defineConfig({
   plugins: [react(), qiankun('reactDemo', { useDevMode: true })],
   resolve: {
     alias: {
-      '@shared': fileURLToPath(new URL('../../packages/shared/src', import.meta.url)),
+      '@virt-list/js': fileURLToPath(new URL('../../packages/js/src/index.ts', import.meta.url)),
     },
   },
   server: {

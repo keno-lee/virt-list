@@ -1,15 +1,9 @@
 {
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
-    "types": [
-      "node"
-    ],
+    "types": ["node"],
     "baseUrl": ".",
-    "paths": {
-      "@shared/*": [
-        "../packages/shared/src/*"
-      ]
-    }
+    "paths": {}
   },
   "include": [
     ".vitepress/**/*.ts",

@@ -1,11 +1,11 @@
 import { VirtualScrollbar } from './VirtualScrollbar';
-import { diffChildren, VNode } from './listDiff';
+import { diffChildren, type VNode } from './listDiff';
 
 // 类型定义
 interface VirtListOptions {
   itemKey: string;
   itemGap: number;
-  minSize: number;
+  itemPreSize: number;
   fixed: boolean;
   buffer: number;
   bufferTop: number;
@@ -58,7 +58,7 @@ interface RenderRange {
 const defaultOptions: VirtListOptions = {
   itemKey: 'id',
   itemGap: 0,
-  minSize: 40,
+  itemPreSize: 40,
   fixed: false,
   horizontal: false,
   scrollDistance: 0,
@@ -357,7 +357,7 @@ class VirtList {
     for (let i = range.begin; i <= range.end; i++) {
       if (this.list[i]) {
         const itemData = this.list[i];
-        const key = itemData[this.options.itemKey];
+        const key = itemData?.[this.options.itemKey];
         // const children = [
         //   {
         //     key,
@@ -626,10 +626,10 @@ class VirtList {
   }
 
   getItemSize(itemKey: string | number): number {
-    if (this.options.fixed) return this.options.minSize + this.options.itemGap;
+    if (this.options.fixed) return this.options.itemPreSize + this.options.itemGap;
     return (
       this.sizesMap.get(String(itemKey)) ??
-      this.options.minSize + this.options.itemGap
+      this.options.itemPreSize + this.options.itemGap
     );
   }
 
@@ -859,9 +859,9 @@ class VirtList {
   } {
     if (this.options.fixed) {
       return {
-        top: (this.options.minSize + this.options.itemGap) * index,
-        current: this.options.minSize + this.options.itemGap,
-        bottom: (this.options.minSize + this.options.itemGap) * (index + 1),
+        top: (this.options.itemPreSize + this.options.itemGap) * index,
+        current: this.options.itemPreSize + this.options.itemGap,
+        bottom: (this.options.itemPreSize + this.options.itemGap) * (index + 1),
       };
     }
 
@@ -913,7 +913,7 @@ class VirtList {
 
     if (this.options.fixed) {
       const size =
-        (this.options.minSize + this.options.itemGap) * this.list.length;
+        (this.options.itemPreSize + this.options.itemGap) * this.list.length;
       this.setListTotalSize(size);
       return;
     }

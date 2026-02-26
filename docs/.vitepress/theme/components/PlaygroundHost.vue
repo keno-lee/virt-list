@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { defaultExampleId, examples } from '@shared/examples';
 import type { MicroApp } from 'qiankun';
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 
@@ -18,7 +17,7 @@ const props = withDefaults(
   }>(),
   {
     framework: 'react',
-    exampleId: defaultExampleId,
+    exampleId: '',
   },
 );
 
@@ -37,10 +36,12 @@ let qiankunApi: null | {
   loadMicroApp: typeof import('qiankun').loadMicroApp;
 } = null;
 
+const isDev = (import.meta as ImportMeta & { env: { DEV: boolean } }).env.DEV;
+
 const appEntries: Record<FrameworkKind, string> = {
-  react: import.meta.env.DEV ? 'http://localhost:7101/' : '/micro-apps/react/',
-  vue: import.meta.env.DEV ? 'http://localhost:7102/' : '/micro-apps/vue/',
-  js: import.meta.env.DEV ? 'http://localhost:7103/' : '/micro-apps/js/',
+  react: isDev ? 'http://localhost:7101/' : '/micro-apps/react/',
+  vue: isDev ? 'http://localhost:7102/' : '/micro-apps/vue/',
+  js: isDev ? 'http://localhost:7103/' : '/micro-apps/js/',
 };
 
 const appNames: Record<FrameworkKind, string> = {
@@ -54,12 +55,6 @@ const titleMap: Record<FrameworkKind, string> = {
   vue: 'Vue 示例运行中',
   js: 'JS 示例运行中',
 };
-
-const title = computed(() => titleMap[framework.value]);
-
-const exampleTitle = computed(
-  () => examples.find((item) => item.id === exampleId.value)?.title ?? exampleId.value,
-);
 
 const appendLog = (message: string) => {
   eventLog.value = [message, ...eventLog.value].slice(0, 8);
@@ -128,43 +123,12 @@ onBeforeUnmount(async () => {
 </script>
 
 <template>
-  <!-- <section class="playground-shell">
-    <header class="playground-header">
-      <h3>{{ title }} - {{ exampleTitle }}</h3>
-    </header>
-
-    <div v-if="loadError" class="status error">
-      {{ loadError }}
-    </div>
-    <div v-else-if="isLoading" class="status loading">
-      微应用加载中...
-    </div>
-    <div v-else-if="!isMounted" class="status warning">
-      微应用尚未挂载。
-    </div>
-
-    <div ref="containerRef" class="micro-container" />
-
-    <div class="event-log">
-      <h4>交互事件</h4>
-      <p v-if="eventLog.length === 0">暂无事件</p>
-      <ul v-else>
-        <li v-for="(item, index) in eventLog" :key="`${item}-${index}`">
-          {{ item }}
-        </li>
-      </ul>
-    </div>
-  </section> -->
   <section class="playground-shell">
     <div v-if="loadError" class="status error">
       {{ loadError }}
     </div>
-    <div v-else-if="isLoading" class="status loading">
-      微应用加载中...
-    </div>
-    <div v-else-if="!isMounted" class="status warning">
-      微应用尚未挂载。
-    </div>
+    <div v-else-if="isLoading" class="status loading">微应用加载中...</div>
+    <div v-else-if="!isMounted" class="status warning">微应用尚未挂载。</div>
 
     <div ref="containerRef" class="micro-container" />
   </section>

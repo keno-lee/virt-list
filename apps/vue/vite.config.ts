@@ -9,7 +9,8 @@ export default defineConfig({
   plugins: [vue(), vueJsx(), qiankun('vueDemo', { useDevMode: true })],
   resolve: {
     alias: {
-      '@shared': fileURLToPath(new URL('../../packages/shared/src', import.meta.url)),
+      '@src': fileURLToPath(new URL('../../src', import.meta.url)),
+      '@virt-list/js': fileURLToPath(new URL('../../packages/js/src/index.ts', import.meta.url)),
     },
   },
   server: {

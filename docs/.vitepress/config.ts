@@ -7,8 +7,8 @@ export default defineConfig({
   themeConfig: {
     nav: [
       { text: 'Js 示例', link: '/js/virt-list', activeMatch: '^/js/' },
-      { text: 'React 示例', link: '/react/virt-list', activeMatch: '^/react/' },
-      { text: 'Vue 示例', link: '/vue/virt-list', activeMatch: '^/vue/' },
+      { text: 'React 示例', link: '/react/tsx', activeMatch: '^/react/' },
+      { text: 'Vue 示例', link: '/vue/tsx', activeMatch: '^/vue/' },
     ],
     sidebar: {
       '/js/': [
@@ -23,9 +23,7 @@ export default defineConfig({
         {
           text: 'React 示例',
           items: [
-            // { text: '按钮交互', link: '/react/button' },
-            // { text: '表单输入', link: '/react/form' },
-            { text: 'TSX/JSX', link: '/react/virt-list' },
+            { text: 'TSX/JSX', link: '/react/tsx' },
           ],
         },
       ],
@@ -33,24 +31,15 @@ export default defineConfig({
         {
           text: 'Vue 示例',
           items: [
-            // { text: '按钮交互', link: '/vue/button' },
-            // { text: '表单输入', link: '/vue/form' },
-            { text: 'TSX/JSX', link: '/vue/virt-list' },
+            { text: 'TSX/JSX', link: '/vue/tsx' },
           ],
         },
       ],
-      // '/guide/': [
-      //   {
-      //     text: '指南',
-      //     items: [{ text: '总览', link: '/guide/playground' }],
-      //   },
-      // ],
     },
   },
   vite: {
     resolve: {
       alias: {
-        '@shared': fileURLToPath(new URL('../../packages/shared/src', import.meta.url)),
       },
     },
   },

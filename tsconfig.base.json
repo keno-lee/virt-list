@@ -7,6 +7,9 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "paths": {
+      "@virt-list/js": ["./packages/js/src/index.ts"],
+    }
   }
 }
