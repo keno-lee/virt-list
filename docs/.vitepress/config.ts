@@ -6,15 +6,16 @@ export default defineConfig({
   description: 'A high-performance virtual list component for JavaScript',
   themeConfig: {
     nav: [
-      { text: 'Js 示例', link: '/js/virt-list', activeMatch: '^/js/' },
-      { text: 'React 示例', link: '/react/tsx', activeMatch: '^/react/' },
-      { text: 'Vue 示例', link: '/vue/tsx', activeMatch: '^/vue/' },
+      { text: 'JS 示例', link: '/js/virt-list', activeMatch: '^/js/' },
+      { text: 'React 示例', link: '/react/literal', activeMatch: '^/react/' },
+      { text: 'Vue 示例', link: '/vue/literal', activeMatch: '^/vue/' },
     ],
     sidebar: {
       '/js/': [
         {
-          text: 'Js 示例',
+          text: 'JS 示例',
           items: [
+            { text: '模版字符串', link: '/js/literal' },
             { text: '虚拟列表', link: '/js/virt-list' },
           ],
         },
@@ -23,7 +24,8 @@ export default defineConfig({
         {
           text: 'React 示例',
           items: [
-            { text: 'TSX/JSX', link: '/react/tsx' },
+            { text: '模版字符串', link: '/react/literal' },
+            { text: '适配器', link: '/react/adapter' },
           ],
         },
       ],
@@ -31,7 +33,8 @@ export default defineConfig({
         {
           text: 'Vue 示例',
           items: [
-            { text: 'TSX/JSX', link: '/vue/tsx' },
+            { text: '模版字符串', link: '/vue/literal' },
+            { text: '适配器', link: '/vue/adapter' },
           ],
         },
       ],

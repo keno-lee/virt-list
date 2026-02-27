@@ -45,7 +45,6 @@ interface SlotSize {
 
 interface ListItem {
   id: number;
-  avatar: string;
   content: string;
   [key: string]: any;
 }

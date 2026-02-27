@@ -14,17 +14,19 @@ pnpm dev
 
 ```text
 .
-├─ apps/        # 微应用目录
-│  └─ js/         # JS 应用
-│  ├─ react/      # React 应用
-│  ├─ vue/        # Vue 应用
-├─ docs/        # VitePress 文档站点 + playground 宿主
-│  └─ js/         # JS 文档
+├─ docs/          # VitePress 文档站点 + playground 宿主
+│  ├─ apps/       # 文档内微应用（react/vue/js）
+│  │  ├─ js/         # JS 应用
+│  │  ├─ react/      # React 应用
+│  │  └─ vue/        # Vue 应用
+│  ├─ js/         # JS 文档
 │  ├─ react/      # React 文档
-│  ├─ vue/        # Vue 文档
-├─ packages/    # 核心包体
-│  ├─ js/         # JS 基础版本
-│  ├─ react/      # React 版本
-│  └─ vue/        # Vue 版本
+│  └─ vue/        # Vue 文档
+├─ packages/      # npm 发布包
+│  ├─ js/         # 核心 virt-list 实现
+│  ├─ react/      # React 封装（预留）
+│  └─ vue/        # Vue 封装（预留）
 ├─ package.json
+├─ pnpm-workspace.yaml
+└─ tsconfig.base.json
 ```

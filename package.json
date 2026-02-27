@@ -6,18 +6,18 @@
   "packageManager": "pnpm@9.15.2",
   "workspaces": [
     "docs",
-    "apps/*",
+    "docs/apps/*",
     "packages/*"
   ],
   "scripts": {
     "dev": "concurrently -n docs,react,vue,js -c cyan,green,magenta,yellow \"pnpm dev:docs\" \"pnpm dev:react\" \"pnpm dev:vue\" \"pnpm dev:js\"",
     "dev:docs": "pnpm -C docs dev",
-    "dev:react": "pnpm -C apps/react dev",
-    "dev:vue": "pnpm -C apps/vue dev",
-    "dev:js": "pnpm -C apps/js dev",
+    "dev:react": "pnpm -C docs/apps/react dev",
+    "dev:vue": "pnpm -C docs/apps/vue dev",
+    "dev:js": "pnpm -C docs/apps/js dev",
     "build": "pnpm -C docs build",
     "preview": "pnpm -C docs preview",
-    "typecheck": "pnpm -C docs typecheck && pnpm -C apps/react typecheck && pnpm -C apps/vue typecheck"
+    "typecheck": "pnpm -C docs typecheck && pnpm -C docs/apps/react typecheck && pnpm -C docs/apps/vue typecheck"
   },
   "devDependencies": {
     "@faker-js/faker": "^10.3.0",
