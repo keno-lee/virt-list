@@ -1,7 +1,8 @@
 import { faker } from '@faker-js/faker';
 import { useEffect, useRef } from 'react';
-import { createRoot, type Root } from 'react-dom/client';
-import { VirtList } from '@virt-list/js';
+import { createElement } from 'react';
+import { VirtList, reactAdapter } from '@virt-list/js';
+import { createRoot } from 'react-dom/client';
 
 interface DemoItem {
   id: number;
@@ -25,12 +26,12 @@ function Item({ item }: AdapterItemProps) {
 function Adapter() {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const virtListRef = useRef<InstanceType<typeof VirtList> | null>(null);
-  const rowRootMapRef = useRef<Map<number, { root: Root; el: HTMLElement }>>(new Map());
-
-  const cleanupRowRoots = () => {
-    rowRootMapRef.current.forEach(({ root }) => root.unmount());
-    rowRootMapRef.current.clear();
-  };
+  const adapterRef = useRef(
+    reactAdapter<DemoItem, AdapterItemProps>(Item, (item) => ({ item }), {
+      createRoot,
+      createElement,
+    }),
+  );
 
   const generateData = (): DemoItem[] => {
     const data: DemoItem[] = [];
@@ -43,29 +44,14 @@ function Adapter() {
     return data;
   };
 
-  const reactAdapter = (RowComponent: React.ComponentType<AdapterItemProps>) => {
-    return (item: DemoItem): HTMLElement => {
-      const cached = rowRootMapRef.current.get(item.id);
-      if (cached) {
-        cached.root.render(<RowComponent item={item} />);
-        return cached.el;
-      }
-
-      const row = document.createElement('div');
-      const rowRoot = createRoot(row);
-      rowRoot.render(<RowComponent item={item} />);
-      rowRootMapRef.current.set(item.id, { root: rowRoot, el: row });
-      return row;
-    };
-  };
-
   useEffect(() => {
     const container = containerRef.current;
+    const adapter = adapterRef.current;
 
     const initVirtList = () => {
       if (!container) return;
 
-      cleanupRowRoots();
+      adapter.cleanup();
       if (virtListRef.current) {
         container.innerHTML = '';
       }
@@ -73,7 +59,7 @@ function Adapter() {
       const instance = new VirtList(container, {
         itemKey: 'id',
         itemPreSize: 50,
-        itemRender: reactAdapter(Item),
+        itemRender: adapter.itemRender,
       });
 
       instance.init(generateData());
@@ -83,7 +69,7 @@ function Adapter() {
     initVirtList();
 
     return () => {
-      cleanupRowRoots();
+      adapter.cleanup();
       if (virtListRef.current && container) {
         container.innerHTML = '';
       }

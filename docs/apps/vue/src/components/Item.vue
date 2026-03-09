@@ -14,6 +14,7 @@
 interface DemoItem {
   id: number;
   content: string;
+  tick: number;
 }
 
 const props = defineProps<{

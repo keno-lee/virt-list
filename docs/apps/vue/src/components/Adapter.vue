@@ -14,15 +14,8 @@
 
 <script setup lang="ts">
 import { faker } from '@faker-js/faker';
-import {
-  createApp,
-  onMounted,
-  onUnmounted,
-  ref,
-  type App as VueApp,
-  type Component,
-} from 'vue';
-import { VirtList } from '@virt-list/js';
+import { createApp, onMounted, onUnmounted, ref } from 'vue';
+import { VirtList, vueAdapter } from '@virt-list/js';
 import Item from './Item.vue';
 
 interface DemoItem {
@@ -36,40 +29,29 @@ interface AdapterItemProps {
 
 const container = ref<HTMLElement | null>(null);
 let virtList: InstanceType<typeof VirtList> | null = null;
-let rowApps: VueApp[] = [];
+const adapter = vueAdapter<DemoItem, AdapterItemProps, typeof Item>(
+  Item,
+  (item) => ({ item }),
+  { createApp },
+);
 
-const cleanupRowApps = () => {
-  for (const app of rowApps) {
-    app.unmount();
-  }
-  rowApps = [];
-};
+const data = ref<DemoItem[]>([]);
 
-const generateData = (): DemoItem[] => {
-  const data: DemoItem[] = [];
-  for (let i = 0; i < 100; i += 1) {
-    data.push({
+const generateData = () => {
+  for (let i = 0; i < 10000; i += 1) {
+    data.value.push({
       id: i,
       content: faker.lorem.paragraph(),
     });
   }
-  return data;
 };
 
-const vueAdapter = (RowComponent: Component<AdapterItemProps>) => {
-  return (item: DemoItem): HTMLElement => {
-    const row = document.createElement('div');
-    const rowApp = createApp(RowComponent, { item });
-    rowApp.mount(row);
-    rowApps.push(rowApp);
-    return row;
-  };
-};
+generateData();
 
 const initVirtList = (): void => {
   if (!container.value) return;
 
-  cleanupRowApps();
+  adapter.cleanup();
   if (virtList) {
     container.value.innerHTML = '';
   }
@@ -77,18 +59,22 @@ const initVirtList = (): void => {
   virtList = new VirtList(container.value, {
     itemKey: 'id',
     itemPreSize: 50,
-    itemRender: vueAdapter(Item as Component<AdapterItemProps>),
+    itemRender: adapter.itemRender,
+    onItemUnmounted: adapter.onItemUnmounted,
   });
 
-  virtList.init(generateData());
+  virtList.init(data.value);
 };
 
 onMounted(() => {
+  setTimeout(() => {
+    data.value[0]!.content = '22222';
+  }, 2000);
   initVirtList();
 });
 
 onUnmounted(() => {
-  cleanupRowApps();
+  adapter.cleanup();
   if (virtList && container.value) {
     container.value.innerHTML = '';
   }
