@@ -1,0 +1,17 @@
+{
+  "name": "@virt-list/react",
+  "version": "1.0.0",
+  "description": "React virtual list component and hook",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "dependencies": {
+    "@virt-list/core": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": ">=17"
+  },
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
