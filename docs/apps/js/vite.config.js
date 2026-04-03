@@ -7,6 +7,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@virt-list/core': fileURLToPath(new URL('../../../packages/core/src/index.ts', import.meta.url)),
+      '@virt-list/dom/src': fileURLToPath(new URL('../../../packages/dom/src', import.meta.url)),
       '@virt-list/dom': fileURLToPath(new URL('../../../packages/dom/src/index.ts', import.meta.url)),
     },
   },

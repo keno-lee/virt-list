@@ -33,6 +33,14 @@ export class VirtListDOM<T extends Record<string, any>> {
     return this._core.state;
   }
 
+  get clientEl(): HTMLElement {
+    return this._clientEl;
+  }
+
+  get listEl(): HTMLElement {
+    return this._listEl;
+  }
+
   constructor(
     container: HTMLElement,
     options: VirtListDOMOptions<T>,
@@ -112,6 +120,16 @@ export class VirtListDOM<T extends Record<string, any>> {
 
   forceUpdate(): void {
     this._core.forceUpdate();
+  }
+
+  clearItemPool(): void {
+    this._itemPool.forEach((el) => {
+      this._core.resizeObserver?.unobserve(el);
+      this._options.onItemUnmounted?.(el);
+      el.remove();
+    });
+    this._itemPool.clear();
+    this._renderedKeys = [];
   }
 
   deletedList2Top(deletedList: T[]): void {

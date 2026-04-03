@@ -39,9 +39,9 @@ let qiankunApi: null | {
 const isDev = (import.meta as ImportMeta & { env: { DEV: boolean } }).env.DEV;
 
 const appEntries: Record<FrameworkKind, string> = {
-  react: isDev ? 'http://localhost:7101/' : '/micro-apps/react/',
-  vue: isDev ? 'http://localhost:7102/' : '/micro-apps/vue/',
-  js: isDev ? 'http://localhost:7103/' : '/micro-apps/js/',
+  react: isDev ? 'http://localhost:8101/' : '/micro-apps/react/',
+  vue: isDev ? 'http://localhost:8102/' : '/micro-apps/vue/',
+  js: isDev ? 'http://localhost:8103/' : '/micro-apps/js/',
 };
 
 const appNames: Record<FrameworkKind, string> = {
