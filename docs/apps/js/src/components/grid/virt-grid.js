@@ -37,7 +37,7 @@ export function bootstrapVirtGrid(root) {
     list,
     gridItems: 2,
     itemKey: 'id',
-    minSize: 70,
+    itemPreSize: 70,
     renderCell: (item, index, rowIndex) => {
       const cell = document.createElement('div');
       cell.className = 'grid-cell';

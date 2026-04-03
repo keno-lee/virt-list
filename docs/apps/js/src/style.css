@@ -177,15 +177,17 @@
 
 .demo-row-item {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   min-height: 40px;
-  padding: 4px 12px;
+  padding: 8px 12px;
   border-bottom: 1px solid #f0f0f0;
   gap: 12px;
 }
 
 .demo-row-index {
   font-weight: bold;
+  flex-shrink: 0;
+  padding-top: 2px;
   color: #667eea;
   min-width: 50px;
 }

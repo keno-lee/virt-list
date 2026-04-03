@@ -6,7 +6,7 @@ export interface VirtGridDOMOptions<T extends Record<string, any>> {
   list: T[];
   gridItems: number;
   itemKey: string;
-  minSize: number;
+  itemPreSize: number;
   itemGap?: number;
   fixed?: boolean;
   buffer?: number;
@@ -60,7 +60,7 @@ export class VirtGridDOM<T extends Record<string, any>> {
       {
         list: this._gridList,
         itemKey: '_id',
-        minSize: options.minSize,
+        itemPreSize: options.itemPreSize,
         itemGap: options.itemGap,
         fixed: options.fixed,
         buffer: options.buffer,

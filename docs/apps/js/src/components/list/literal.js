@@ -19,7 +19,7 @@ export function bootstrapLiteral(root) {
   const virtList = new VirtListDOM(container, {
     list: generateData(),
     itemKey: 'id',
-    minSize: 72,
+    itemPreSize: 72,
     buffer: 3,
     renderItem: (item) => {
       const row = document.createElement('div');

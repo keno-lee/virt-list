@@ -3,31 +3,34 @@ import {
   qiankunWindow,
   renderWithQiankun,
 } from 'vite-plugin-qiankun/dist/helper';
-import { bootstrapLiteral } from './literal.js';
-import { bootstrapVirtList } from './virt-list.js';
-import { bootstrapVirtGrid } from './virt-grid.js';
-import { bootstrapBasic } from './basic.js';
-import { bootstrapHugeData } from './huge-data.js';
-import { bootstrapFixed } from './fixed.js';
-import { bootstrapHorizontal } from './horizontal.js';
-import { bootstrapSlots } from './slots.js';
-import { bootstrapOperations } from './operations.js';
-import { bootstrapResize } from './resize.js';
-import { bootstrapDynamic } from './dynamic.js';
-import { bootstrapTable } from './table.js';
-import { bootstrapInfinity } from './infinity.js';
-import { bootstrapChat } from './chat.js';
-import { bootstrapAdvanced } from './advanced.js';
-import { bootstrapPagination } from './pagination.js';
-import { bootstrapKeepAlive } from './keep-alive.js';
-import { bootstrapTreeBasic } from './virt-tree-basic.js';
-import { bootstrapTreeCheckbox } from './virt-tree-checkbox.js';
-import { bootstrapTreeExpand } from './virt-tree-expand.js';
-import { bootstrapTreeFilter } from './virt-tree-filter.js';
-import { bootstrapTreeSelect } from './virt-tree-select.js';
-import { bootstrapTreeShowLine } from './virt-tree-showline.js';
-import { bootstrapTreeContent } from './virt-tree-content.js';
-import { bootstrapTreeDrag } from './virt-tree-drag.js';
+import { bootstrapLiteral } from './components/list/literal.js';
+import { bootstrapVirtList } from './components/list/virt-list.js';
+import { bootstrapBasic } from './components/list/basic.js';
+import { bootstrapHugeData } from './components/list/huge-data.js';
+import { bootstrapFixed } from './components/list/fixed.js';
+import { bootstrapHorizontal } from './components/list/horizontal.js';
+import { bootstrapSlots } from './components/list/slots.js';
+import { bootstrapOperations } from './components/list/operations.js';
+import { bootstrapResize } from './components/list/resize.js';
+import { bootstrapDynamic } from './components/list/dynamic.js';
+import { bootstrapInfinity } from './components/list/infinity.js';
+import { bootstrapChat } from './components/list/chat.js';
+import { bootstrapAdvanced } from './components/list/advanced.js';
+import { bootstrapPagination } from './components/list/pagination.js';
+import { bootstrapKeepAlive } from './components/list/keep-alive.js';
+import { bootstrapTable } from './components/list/table.js';
+
+import { bootstrapTreeBasic } from './components/tree/virt-tree-basic.js';
+import { bootstrapTreeCheckbox } from './components/tree/virt-tree-checkbox.js';
+import { bootstrapTreeExpand } from './components/tree/virt-tree-expand.js';
+import { bootstrapTreeFilter } from './components/tree/virt-tree-filter.js';
+import { bootstrapTreeSelect } from './components/tree/virt-tree-select.js';
+import { bootstrapTreeShowLine } from './components/tree/virt-tree-showline.js';
+import { bootstrapTreeContent } from './components/tree/virt-tree-content.js';
+import { bootstrapTreeDrag } from './components/tree/virt-tree-drag.js';
+
+import { bootstrapVirtGrid } from './components/grid/virt-grid.js';
+
 
 const demoBootstrapMap = {
   literal: bootstrapLiteral,

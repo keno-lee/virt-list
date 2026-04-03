@@ -34,7 +34,7 @@ function Literal() {
       virtListRef.current = new VirtListDOM(container, {
         list: generateData(),
         itemKey: 'id',
-        minSize: 50,
+        itemPreSize: 50,
         renderItem: (item: DemoItem): HTMLElement => {
           const row = document.createElement('div');
           row.style.padding = '4px';

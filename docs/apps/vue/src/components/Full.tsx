@@ -132,7 +132,7 @@ export default defineComponent({
         list: generateData(),
         itemKey: 'id',
         itemGap: 2,
-        minSize: 50,
+        itemPreSize: 50,
         renderItem,
         renderStickyHeader,
         renderHeader,

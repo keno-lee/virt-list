@@ -56,7 +56,7 @@ export function bootstrapAdvanced(root) {
     {
       list,
       itemKey: 'id',
-      minSize: 40,
+      itemPreSize: 40,
       stickyHeaderStyle: 'background:#f5f5f5;',
       renderStickyHeader: () => {
         const header = document.createElement('div');

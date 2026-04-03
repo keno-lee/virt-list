@@ -169,7 +169,7 @@ export function useVirtList<T extends Record<string, any>>(
   const prevOptionsRef = useRef(coreOptions);
   const prevOpts = prevOptionsRef.current;
   if (
-    prevOpts.minSize !== coreOptions.minSize ||
+    prevOpts.itemPreSize !== coreOptions.itemPreSize ||
     prevOpts.itemGap !== coreOptions.itemGap ||
     prevOpts.fixed !== coreOptions.fixed ||
     prevOpts.buffer !== coreOptions.buffer ||
@@ -302,7 +302,7 @@ function VirtListInner<T extends Record<string, any>>(
   const {
     list,
     itemKey,
-    minSize,
+    itemPreSize,
     renderItem,
     renderHeader,
     renderFooter,
@@ -334,7 +334,7 @@ function VirtListInner<T extends Record<string, any>>(
   const vl = useVirtList<T>({
     list,
     itemKey,
-    minSize,
+    itemPreSize,
     horizontal,
     itemGap,
     onScroll,

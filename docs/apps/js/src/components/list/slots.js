@@ -1,11 +1,20 @@
 import { VirtListDOM } from '@virt-list/dom';
 
+const SENTENCES = [
+  '插槽示例展示了 stickyHeader、header、footer、stickyFooter 四种插槽的使用方法。',
+  '短行。',
+  'Sticky 插槽会固定在滚动容器的顶部或底部，不会随内容一起滚动。这在需要展示固定表头或固定操作栏的场景中非常实用。',
+  '普通 header 和 footer 会随列表内容一起滚动。',
+  '每一行的高度各不相同，这是因为文本内容的长度不同导致自然换行。虚拟列表会在渲染后准确测量每个元素的尺寸，从而保证滚动行为的正确性。',
+];
+
 function generateList(count) {
-  return Array.from({ length: count }, (_, i) => ({
-    id: i,
-    index: i,
-    text: `Slots 示例行 ${i} 的内容。`,
-  }));
+  return Array.from({ length: count }, (_, i) => {
+    const n = (i % 4) + 1;
+    const parts = [];
+    for (let s = 0; s < n; s++) parts.push(SENTENCES[(i + s * 2) % SENTENCES.length]);
+    return { id: i, index: i, text: parts.join(' ') };
+  });
 }
 
 function createSlotEl(text, style) {
@@ -42,7 +51,7 @@ export function bootstrapSlots(root) {
     {
       list,
       itemKey: 'id',
-      minSize: 40,
+      itemPreSize: 40,
       buffer: 2,
       stickyHeaderStyle: 'background:#2e8b57;height:50px;',
       renderStickyHeader: () => createSlotEl('Sticky Header（固定头部）'),

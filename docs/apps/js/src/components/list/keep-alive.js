@@ -100,7 +100,7 @@ export function bootstrapKeepAlive(root) {
       currentVirtList = new VirtListDOM(container, {
         list: users,
         itemKey: 'id',
-        minSize: 70,
+        itemPreSize: 70,
         buffer: 5,
         renderItem: (item) => createUserItem(item),
       });
@@ -143,7 +143,7 @@ export function bootstrapKeepAlive(root) {
       currentVirtList = new VirtListDOM(container, {
         list: products,
         itemKey: 'id',
-        minSize: 70,
+        itemPreSize: 70,
         buffer: 5,
         renderItem: (item) => createProductItem(item),
       });

@@ -99,10 +99,10 @@ export class VirtListCore<T extends Record<string, any>> {
   }
 
   getItemSize(itemKey: string): number {
-    if (this._props.fixed) return this._props.minSize + this._props.itemGap;
+    if (this._props.fixed) return this._props.itemPreSize + this._props.itemGap;
     return (
       this.sizesMap.get(String(itemKey)) ??
-      this._props.minSize + this._props.itemGap
+      this._props.itemPreSize + this._props.itemGap
     );
   }
 
@@ -119,9 +119,9 @@ export class VirtListCore<T extends Record<string, any>> {
     current: number;
     bottom: number;
   } {
-    const { minSize, itemGap, fixed } = this._props;
+    const { itemPreSize, itemGap, fixed } = this._props;
     if (fixed) {
-      const unitSize = minSize + itemGap;
+      const unitSize = itemPreSize + itemGap;
       return {
         top: unitSize * index,
         current: unitSize,
@@ -438,7 +438,7 @@ export class VirtListCore<T extends Record<string, any>> {
   private _calcViews(): void {
     this.state.views =
       Math.ceil(
-        this.slotSize.clientSize / (this._props.minSize + this._props.itemGap),
+        this.slotSize.clientSize / (this._props.itemPreSize + this._props.itemGap),
       ) + 1;
   }
 
@@ -450,7 +450,7 @@ export class VirtListCore<T extends Record<string, any>> {
   private _calcListTotalSize(): void {
     if (this._props.fixed) {
       this.state.listTotalSize =
-        (this._props.minSize + this._props.itemGap) * this._props.list.length;
+        (this._props.itemPreSize + this._props.itemGap) * this._props.list.length;
       return;
     }
     const { itemKey, list } = this._props;

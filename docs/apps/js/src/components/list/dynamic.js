@@ -35,7 +35,7 @@ export function bootstrapDynamic(root) {
     {
       list,
       itemKey: 'id',
-      minSize: 20,
+      itemPreSize: 20,
       buffer: 5,
       renderItem: (item) => {
         const row = document.createElement('div');

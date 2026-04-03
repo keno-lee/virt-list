@@ -21,11 +21,13 @@ const syncVpDocClass = (path: string) => {
 
   nodes.forEach((el) => {
     el.setAttribute(VP_DOC_MARKER_ATTR, '1');
-    if (enabled) {
-      el.classList.add('vp-doc');
-    } else {
-      el.classList.remove('vp-doc');
-    }
+    el.classList.add('vp-doc');
+    // 后续如果需要禁用样式就加上
+    // if (enabled) {
+    //   el.classList.add('vp-doc');
+    // } else {
+    //   el.classList.remove('vp-doc');
+    // }
   });
 };
 

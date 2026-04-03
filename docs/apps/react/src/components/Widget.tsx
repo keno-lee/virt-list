@@ -54,7 +54,7 @@ function VirtListDemo() {
           ref={virtListRef}
           list={list}
           itemKey="id"
-          minSize={50}
+          itemPreSize={50}
           buffer={4}
           renderItem={(item, index) => (
             <div style={{ padding: 4 }}>

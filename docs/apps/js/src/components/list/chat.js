@@ -4,6 +4,17 @@ const PAGE_SIZE = 40;
 
 let uid = 0;
 
+const CHAT_MSGS = [
+  '好的，收到！',
+  '这个方案看起来不错，我觉得可以按这个方向继续推进。',
+  '你有空的时候帮我看一下那个 bug 吗？就是用户反馈的列表滚动卡顿问题。',
+  '明天的会议改到下午三点了，记得提前准备一下演示材料。',
+  '我刚刚测试了一下新版本的虚拟列表组件，在十万条数据的情况下滚动依然非常流畅，完全没有掉帧的情况。之前用全量渲染的方案在五千条数据时就开始卡顿了，这次的优化效果非常明显！',
+  '👍',
+  '关于上次讨论的技术选型问题，我整理了一份对比文档，包括性能测试数据、社区活跃度、学习成本等方面的分析。总体来看，新方案在各方面都有优势。等你有空了我们再详细讨论一下具体的迁移计划。',
+  '周末愉快！',
+];
+
 function generatePage(page, pageSize) {
   const start = (page - 1) * pageSize;
   return Array.from({ length: pageSize }, (_, i) => {
@@ -11,7 +22,7 @@ function generatePage(page, pageSize) {
     return {
       id: uid++,
       index: idx,
-      text: `这是消息 #${idx}，来自聊天记录。翻到顶部可以加载更早的消息。`,
+      text: CHAT_MSGS[idx % CHAT_MSGS.length],
     };
   });
 }
@@ -45,7 +56,7 @@ export function bootstrapChat(root) {
     {
       list,
       itemKey: 'id',
-      minSize: 60,
+      itemPreSize: 60,
       renderHeader: () => {
         const el = document.createElement('div');
         el.className = 'demo-loading-bar';

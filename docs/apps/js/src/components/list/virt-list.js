@@ -1,9 +1,22 @@
 import { VirtListDOM } from '@virt-list/dom';
 
-const list = Array.from({ length: 1000 }, (_, i) => ({
-  id: i,
-  content: `这是第 ${i + 1} 行内容，演示纯 JS 虚拟列表渲染。`,
-}));
+const SENTENCES = [
+  '虚拟列表只渲染可视区域内的元素，大幅提升性能。',
+  '动态高度列表需要在渲染后测量实际尺寸。',
+  '每一行的内容长度不同，高度也会随之变化。这是虚拟列表最核心的能力之一，它需要实时追踪每个元素的实际渲染尺寸。',
+  '短文本。',
+  '相比全量渲染，虚拟列表可以将 DOM 节点控制在很小的范围内。即使面对数十万条数据，滚动体验依然流畅丝滑，内存占用也维持在较低水平。',
+  '滚动过程中列表会计算需要渲染的起始和结束索引。',
+  '被移出可视区域的节点会被及时回收，新进入可视区域的节点会被创建并插入到正确的位置。这个过程对用户来说是完全透明的。',
+  '纯 JS 实现，无框架依赖。',
+];
+
+const list = Array.from({ length: 1000 }, (_, i) => {
+  const n = (i % 5) + 1;
+  const parts = [];
+  for (let s = 0; s < n; s++) parts.push(SENTENCES[(i + s * 3) % SENTENCES.length]);
+  return { id: i, content: parts.join(' ') };
+});
 
 const template = `
   <div class="virt-list-controls">
@@ -44,16 +57,17 @@ export function bootstrapVirtList(root) {
   const virtList = new VirtListDOM(container, {
     list,
     itemKey: 'id',
-    minSize: 72,
+    itemPreSize: 72,
     buffer: 4,
     renderItem: (item) => {
       const row = document.createElement('div');
       row.className = 'virt-item';
       row.style.backgroundColor = `hsl(${(item.id * 13) % 360} 75% 95%)`;
+      row.style.padding = '8px 12px';
+      row.style.borderBottom = '1px solid rgba(0,0,0,0.06)';
       row.innerHTML = `
-        <div style="font-weight:bold;">Item ${item.id}</div>
-        <div style="color:#666;font-size:12px;">${item.content}</div>
-        <div style="color:#999;font-size:10px;">Key: ${item.id} (Pure JS)</div>
+        <div style="font-weight:bold;margin-bottom:2px;">Item ${item.id}</div>
+        <div style="color:#666;font-size:13px;line-height:1.5;">${item.content}</div>
       `;
       return row;
     },

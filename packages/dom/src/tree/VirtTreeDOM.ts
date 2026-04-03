@@ -684,7 +684,7 @@ export class VirtTreeDOM {
 
   private _createVirtList(): void {
     const opts = this._options;
-    const defaultSize = opts.minSize ?? 32;
+    const defaultSize = opts.itemPreSize ?? 32;
     const customGroup = opts.customGroup ?? 'virt-tree-group';
     const listClass = `${customGroup} ${opts.listClass ?? ''}`;
 
@@ -693,7 +693,7 @@ export class VirtTreeDOM {
       {
         list: this._renderList,
         itemKey: 'key',
-        minSize: defaultSize,
+        itemPreSize: defaultSize,
         fixed: opts.fixed,
         itemGap: opts.itemGap,
         buffer: opts.buffer ?? 2,
@@ -733,7 +733,7 @@ export class VirtTreeDOM {
 
   private _renderTreeNode(node: TreeNode): HTMLElement {
     const opts = this._options;
-    const defaultSize = opts.minSize ?? 32;
+    const defaultSize = opts.itemPreSize ?? 32;
     const indent = opts.indent ?? 16;
     const iconSize = opts.iconSize ?? 16;
     const fixed = opts.fixed ?? false;
@@ -767,7 +767,7 @@ export class VirtTreeDOM {
 
     if (draggable) {
       wrapper.setAttribute('draggable', 'true');
-      wrapper.addEventListener('mousedown', (e: MouseEvent) => {
+      wrapper.addEventListener('dragstart', (e: MouseEvent) => {
         this._onDragstart(e);
       });
     }

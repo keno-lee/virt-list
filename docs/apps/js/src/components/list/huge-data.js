@@ -32,13 +32,19 @@ export function bootstrapHugeData(root) {
     emptyHint.textContent = '数据生成中...';
 
     setTimeout(() => {
+      const hugeTexts = [
+        '海量数据测试行。',
+        '虚拟列表在处理大量数据时依然保持流畅的滚动体验，DOM 节点数量始终维持在较低水平。',
+        '这一行的内容比较短。',
+        '通过增量式的 DOM 更新策略，虚拟列表避免了一次性创建大量节点所带来的性能瓶颈。即使数据量达到数十万条，首屏渲染速度和滚动帧率都不会受到明显影响。这是传统列表渲染方式无法做到的。',
+        '数据量越大，虚拟列表相对于全量渲染的性能优势越明显。',
+      ];
       const list = [];
       for (let i = 0; i < 300000; i++) {
-        list.push({
-          id: i,
-          index: i,
-          text: `Row ${i} - 这是一条海量数据中的记录，用于验证虚拟列表的高性能渲染能力。`,
-        });
+        const n = (i % 4) + 1;
+        const parts = [];
+        for (let s = 0; s < n; s++) parts.push(hugeTexts[(i + s * 2) % hugeTexts.length]);
+        list.push({ id: i, index: i, text: parts.join(' ') });
       }
 
       emptyHint.remove();
@@ -49,7 +55,7 @@ export function bootstrapHugeData(root) {
         {
           list,
           itemKey: 'id',
-          minSize: 40,
+          itemPreSize: 40,
           buffer: 5,
           renderItem: (item) => {
             const row = document.createElement('div');

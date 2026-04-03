@@ -54,7 +54,7 @@ export interface VirtTreeDOMOptions {
   iconSize?: number;
   itemGap?: number;
   buffer?: number;
-  minSize?: number;
+  itemPreSize?: number;
   fixed?: boolean;
   showLine?: boolean;
   itemClass?: string;

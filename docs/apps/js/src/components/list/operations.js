@@ -1,11 +1,21 @@
 import { VirtListDOM } from '@virt-list/dom';
 
+const SENTENCES = [
+  '使用 scrollToIndex 可以精确跳转到指定索引的位置。',
+  '使用 scrollToOffset 可以跳转到指定的像素偏移量。',
+  '这行内容较短。',
+  'scrollIntoView 会将目标元素滚动到可视区域内，如果已经在可视区域则不会滚动。这个 API 在需要确保某个元素可见时非常有用。',
+  '滚动到顶部和底部是最常见的操作。',
+  '虚拟列表支持多种滚动定位方式，可以根据不同的业务场景选择最合适的 API。所有的滚动操作都是平滑的，不会出现跳动或闪烁。',
+];
+
 function generateList(count) {
-  return Array.from({ length: count }, (_, i) => ({
-    id: i,
-    index: i,
-    text: `操作示例行 ${i}`,
-  }));
+  return Array.from({ length: count }, (_, i) => {
+    const n = (i % 4) + 1;
+    const parts = [];
+    for (let s = 0; s < n; s++) parts.push(SENTENCES[(i + s * 2) % SENTENCES.length]);
+    return { id: i, index: i, text: parts.join(' ') };
+  });
 }
 
 const template = `
@@ -52,7 +62,7 @@ export function bootstrapOperations(root) {
     {
       list,
       itemKey: 'id',
-      minSize: 40,
+      itemPreSize: 40,
       renderItem: (item) => {
         const row = document.createElement('div');
         row.className = 'demo-row-item';

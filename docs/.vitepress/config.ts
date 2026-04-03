@@ -6,9 +6,9 @@ export default defineConfig({
   description: 'A high-performance virtual list component for JavaScript',
   themeConfig: {
     nav: [
-      { text: 'JS 示例', link: '/js/basic', activeMatch: '^/js/' },
-      { text: 'React 示例', link: '/react/literal', activeMatch: '^/react/' },
-      { text: 'Vue 示例', link: '/vue/literal', activeMatch: '^/vue/' },
+      { text: 'Pure JS', link: '/js/basic', activeMatch: '^/js/' },
+      { text: 'React', link: '/react/literal', activeMatch: '^/react/' },
+      { text: 'Vue', link: '/vue/literal', activeMatch: '^/vue/' },
     ],
     sidebar: {
       '/js/': [
@@ -31,12 +31,12 @@ export default defineConfig({
             { text: '各类操作', link: '/js/operations' },
             { text: '可变窗口大小', link: '/js/resize' },
             { text: '可变高度', link: '/js/dynamic' },
-            { text: '表格', link: '/js/table' },
             { text: '无限加载', link: '/js/infinity' },
             { text: '聊天室', link: '/js/chat' },
             { text: '高阶用法', link: '/js/advanced' },
             { text: '上下分页', link: '/js/pagination' },
             { text: 'keep-alive', link: '/js/keep-alive' },
+            { text: '表格', link: '/js/table' },
           ],
         },
         {

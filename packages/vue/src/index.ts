@@ -199,7 +199,7 @@ export const VirtList = defineComponent({
   props: {
     list: { type: Array as () => any[], default: () => [] },
     itemKey: { type: [String, Number], required: true },
-    minSize: { type: Number, default: 20, required: true },
+    itemPreSize: { type: Number, default: 20, required: true },
     itemGap: { type: Number, default: 0 },
     renderControl: { type: Function, default: undefined },
     fixed: { type: Boolean, default: false },

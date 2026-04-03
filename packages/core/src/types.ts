@@ -24,7 +24,7 @@ export interface SlotSize {
 export interface VirtListOptions<T extends Record<string, any>> {
   list: T[];
   itemKey: string;
-  minSize: number;
+  itemPreSize: number;
   itemGap?: number;
   fixed?: boolean;
   buffer?: number;

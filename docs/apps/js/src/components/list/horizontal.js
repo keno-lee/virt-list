@@ -1,21 +1,22 @@
 import { VirtListDOM } from '@virt-list/dom';
 
+const WIDTHS = [60, 80, 100, 110, 130];
+
 function generateList(count) {
   return Array.from({ length: count }, (_, i) => ({
     id: i,
-    index: i,
-    text: `固定高度行 ${i}，每行高度一致（40px）。`,
+    width: WIDTHS[Math.floor(Math.random() * WIDTHS.length)],
   }));
 }
 
 const template = `
   <div class="demo-panel">
     <div id="stats" class="demo-stats"></div>
-    <div class="demo-list-container" id="listContainer"></div>
+    <div class="demo-horizontal-container" id="listContainer"></div>
   </div>
 `;
 
-export function bootstrapFixed(root) {
+export function bootstrapHorizontal(root) {
   root.innerHTML = template;
 
   const container = root.querySelector('#listContainer');
@@ -27,19 +28,19 @@ export function bootstrapFixed(root) {
     {
       list,
       itemKey: 'id',
-      minSize: 40,
-      fixed: true,
+      itemPreSize: 60,
+      horizontal: true,
       buffer: 2,
       renderItem: (item) => {
-        const row = document.createElement('div');
-        row.className = 'demo-row-item';
-        row.style.height = '40px';
-        row.style.lineHeight = '40px';
-        row.innerHTML = `
-          <span class="demo-row-index">#${item.index}</span>
-          <span class="demo-row-text">${item.text}</span>
+        const col = document.createElement('div');
+        col.className = 'demo-col-item';
+        col.style.minWidth = `${item.width}px`;
+        col.style.width = `${item.width}px`;
+        col.innerHTML = `
+          <div style="font-weight:bold;">${item.id}</div>
+          <div style="font-size:11px;color:#999;">w:${item.width}</div>
         `;
-        return row;
+        return col;
       },
     },
     {
@@ -49,7 +50,7 @@ export function bootstrapFixed(root) {
     },
   );
 
-  statsEl.textContent = `总数: ${list.length} | 固定高度: 40px`;
+  statsEl.textContent = `总数: ${list.length} | 水平滚动`;
 
   return () => {
     virtList.destroy();
